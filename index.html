@@ -24,7 +24,7 @@
       color:#fff
     }
 
-    /* 👉 subimos el juego: anclamos arriba en vez de centro */
+ 
     body{
       min-height:100vh;
       display:flex;
@@ -148,7 +148,7 @@
       align-items:center;
       gap:14px;
       z-index:3;
-      margin-top:clamp(10px,4vh,40px); /* 💫 un poco más arriba */
+      margin-top:clamp(10px,4vh,40px); 
     }
 
     .topbar{
@@ -162,7 +162,7 @@
     .game-logo{
       width:200px;
       height:auto;
-      margin-bottom:80px;  /* antes 170px: acercamos el juego al título */
+      margin-bottom:80px;  
       filter: drop-shadow(0 0 18px rgba(255,215,0,.25));
     }
 
@@ -194,7 +194,7 @@
       position:relative;
       width:100%;
       height:340px;
-      overflow:hidden; /* ✅ los palitos blancos ya no se salen del recuadro */
+      overflow:hidden; 
       display:flex;
       align-items:center;
       justify-content:center;
@@ -244,7 +244,7 @@
       border-radius:50%;
     }
 
-    /* 🔧 acortamos el palito blanco para que no salga del card */
+   
     .bulb::before{
       content:"";
       position:absolute;
@@ -349,7 +349,7 @@
       outline-offset:3px;
     }
 
-    /* 🎁 Modal estilo “media dorada” */
+    
     .modal{
       position:fixed;
       inset:0;
@@ -440,7 +440,7 @@
       100%{opacity:1;transform:translateY(160vh) rotate(540deg)}
     }
 
-    /* Responsive: mobile-first adjustments */
+    
     @media (max-width:900px){
       :root{--bulb-size:76px}
       .svg-wrapper{height:300px}
@@ -551,7 +551,7 @@
   </div><!-- /#mainContainer -->
 
   <script>
-    // ⭐ Estrellas
+    
     (function createStars(){
       const stars = document.getElementById('stars');
       if(!stars) return;
@@ -595,7 +595,7 @@
 
     function initGuirnalda(){
       try {
-        // 🔑 LocalStorage propio para este juego
+        // LocalStorage
         const STORAGE_KEY = 'arcoirisLucesArkana_v1';
 
         const BONUSES = [
@@ -639,7 +639,7 @@
           bgStarted = true;
         }
 
-        // 🎵 La música arranca con la PRIMER interacción en pantalla
+        // 
         const handleUserInteract = () => {
           startBgMusic();
           document.removeEventListener('pointerdown', handleUserInteract);
@@ -653,7 +653,7 @@
           return;
         }
 
-        // limpiar restos viejos si los hubiera
+        // 
         (svg.querySelectorAll('g.bulb-svg, foreignObject, line.hanger') || []).forEach(n => n.remove());
 
         const todayStr = () => {
@@ -868,18 +868,18 @@
           const btn = e.currentTarget;
           if(!btn) return;
 
-          // arranca la música si aún no empezó
+          
           startBgMusic();
           playSfx(tapSound, 0.85);
 
           const stored = getStoredChoice();
           if(stored && stored.date === todayStr()){
-            // 🔁 Ya jugó hoy: solo mostramos el bono guardado
+           
             showStoredModal(stored.bonus);
             return;
           }
 
-          // Primera vez del día
+ 
           btn.classList.add('revealed');
 
           const bonus = btn.dataset.bonus || weightedPick(BONUSES);
@@ -1014,7 +1014,7 @@
           refreshTrees();
         }
 
-        // si ya eligió hoy, mostramos directamente su bono
+        
         const stored = getStoredChoice();
         if(stored && stored.date === todayStr()){
           const bulbs = document.querySelectorAll('.bulb');
