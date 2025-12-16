@@ -16,9 +16,23 @@
     }
     
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:var(--font);background:linear-gradient(180deg,#6c0f14 0%, #7b1220 45%, #3a0710 100%);color:#fff}
-    body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;overflow-x:hidden}
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:var(--font);
+      background:linear-gradient(180deg,#6c0f14 0%, #7b1220 45%, #3a0710 100%);
+      color:#fff
+    }
 
+    /* 👉 subimos el juego: anclamos arriba en vez de centro */
+    body{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      padding:40px 20px 24px;
+      overflow-x:hidden;
+    }
 
     .stars{
       position:fixed;
@@ -89,7 +103,6 @@
       100%{background-position:100% 0}
     }
 
-
     .container{
       opacity:0;
       transition:opacity .5s ease;
@@ -98,7 +111,6 @@
       justify-content:center;
     }
     .container.visible{ opacity:1; }
-
 
     .trees-layer{
       position:fixed;
@@ -126,16 +138,31 @@
       100%{ transform: translateY(0) rotate(var(--rot)); }
     }
 
+    .stage{
+      width:100%;
+      max-width:1100px;
+      position:relative;
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:14px;
+      z-index:3;
+      margin-top:clamp(10px,4vh,40px); /* 💫 un poco más arriba */
+    }
 
-    .stage{width:100%;max-width:1100px;position:relative;padding:16px;display:flex;flex-direction:column;align-items:center;gap:14px;z-index:3}
-
-    .topbar{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:6px}
-
+    .topbar{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+      margin-bottom:6px
+    }
 
     .game-logo{
       width:200px;
       height:auto;
-      margin-bottom: 170px;
+      margin-bottom:80px;  /* antes 170px: acercamos el juego al título */
       filter: drop-shadow(0 0 18px rgba(255,215,0,.25));
     }
 
@@ -163,12 +190,11 @@
       text-align:center;
     }
 
-
     .svg-wrapper{
       position:relative;
       width:100%;
       height:340px;
-      overflow:visible;
+      overflow:hidden; /* ✅ los palitos blancos ya no se salen del recuadro */
       display:flex;
       align-items:center;
       justify-content:center;
@@ -177,9 +203,22 @@
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       box-shadow: 0 12px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.02);
     }
-    svg.garland{position:relative; width:92%; height:100%; pointer-events:none; z-index:1}
-    .lights{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:auto;z-index:2}
-
+    svg.garland{
+      position:relative;
+      width:92%;
+      height:100%;
+      pointer-events:none;
+      z-index:1
+    }
+    .lights{
+      position:absolute;
+      left:0;
+      top:0;
+      width:100%;
+      height:100%;
+      pointer-events:auto;
+      z-index:2
+    }
 
     .bulb{
       position:absolute;
@@ -188,57 +227,100 @@
       margin-left:calc(var(--bulb-size)/-2);
       margin-top:calc(var(--bulb-size)/-2);
       pointer-events:auto;
-      border:0;background:transparent;padding:0;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      touch-action:manipulation;outline:none;border-radius:50%;
+      border:0;
+      background:transparent;
+      padding:0;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      touch-action:manipulation;
+      outline:none;
+      border-radius:50%;
       transition:transform .18s ease, opacity .18s ease, filter .18s ease;
     }
-    .bulb:focus{box-shadow:0 0 0 10px rgba(255,255,255,0.06);border-radius:50%}
+    .bulb:focus{
+      box-shadow:0 0 0 10px rgba(255,255,255,0.06);
+      border-radius:50%;
+    }
 
+    /* 🔧 acortamos el palito blanco para que no salga del card */
     .bulb::before{
       content:"";
       position:absolute;
-      top:calc(-1 * var(--bulb-size) * 0.56);
-      left:50%;transform:translateX(-50%);
-      width:5px;height:calc(var(--bulb-size) * 0.48);background:var(--string-color);border-radius:2px;z-index:6;
+      top:calc(-1 * var(--bulb-size) * 0.50);
+      left:50%;
+      transform:translateX(-50%);
+      width:5px;
+      height:calc(var(--bulb-size) * 0.42);
+      background:var(--string-color);
+      border-radius:2px;
+      z-index:6;
     }
 
     .bulb .glow{
-      position:absolute;width:140%;height:140%;border-radius:50%;filter:blur(14px);z-index:1;transform:translateY(6px);
+      position:absolute;
+      width:140%;
+      height:140%;
+      border-radius:50%;
+      filter:blur(14px);
+      z-index:1;
+      transform:translateY(6px);
       transition:opacity .18s ease, transform .18s ease;
     }
-    .bulb .art{ width:86%; height:86%; transform-origin:center; display:block; z-index:7; transition:transform .18s ease }
-    .bulb .cap{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:40%;height:12%;background:linear-gradient(180deg,#fff,#ddd);border-radius:4px;z-index:8}
+    .bulb .art{
+      width:86%;
+      height:86%;
+      transform-origin:center;
+      display:block;
+      z-index:7;
+      transition:transform .18s ease
+    }
+    .bulb .cap{
+      position:absolute;
+      bottom:8px;
+      left:50%;
+      transform:translateX(-50%);
+      width:40%;
+      height:12%;
+      background:linear-gradient(180deg,#fff,#ddd);
+      border-radius:4px;
+      z-index:8
+    }
 
     .bulb:hover{transform:translateY(-8px) scale(1.02)}
-    .bulb.revealed{opacity:1;pointer-events:none;transform:scale(1.06)}
+    .bulb.revealed{opacity:1;transform:scale(1.06)}
     .bulb.revealed .glow{opacity:0.6}
 
-
     .btn{
-      background:#0b6b4a;color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:700;
+      background:#0b6b4a;
+      color:#fff;
+      border:0;
+      padding:10px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:700;
       font-family:var(--font);
       font-size:15px;
     }
-
 
     .modal .btn{
       display:inline-flex;
       align-items:center;
       gap:10px;
-      background: linear-gradient(90deg,#ff5a5a,#8b0000);
-      color:#ffffff;
+      background: linear-gradient(135deg,#FFD700,#FFA500);
+      color:#5b0111;
       border:none;
       padding:14px 20px;
       font-weight:800;
-      border-radius:12px;
-      box-shadow: 0 10px 30px rgba(139,0,0,0.28);
+      border-radius:999px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.55);
       cursor:pointer;
-      transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+      transition:transform .14s ease, box-shadow .14s ease, opacity .14s ease;
       text-transform:uppercase;
       letter-spacing:1px;
       font-size:16px;
-      min-width:110px;
+      min-width:130px;
       justify-content:center;
     }
 
@@ -250,42 +332,113 @@
       width:30px;
       height:30px;
       border-radius:50%;
-      background:rgba(255,255,255,0.12);
-      color:#fff;
+      background:rgba(255,255,255,0.18);
+      color:#5b0111;
       font-weight:900;
       font-size:15px;
       transform:translateY(-1px);
     }
 
-    /* hover & focus para botón rojo */
     .modal .btn:hover{
       transform:translateY(-3px) scale(1.02);
-      box-shadow: 0 16px 40px rgba(139,0,0,0.42);
+      box-shadow: 0 18px 48px rgba(0,0,0,0.7);
     }
     .modal .btn:active{ transform:translateY(0); }
-    .modal .btn:focus{ outline: 3px solid rgba(255,90,90,0.20); outline-offset:3px; }
+    .modal .btn:focus{
+      outline: 3px solid rgba(255,215,0,0.45);
+      outline-offset:3px;
+    }
 
-    /* Modal */
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);z-index:40}
+    /* 🎁 Modal estilo “media dorada” */
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.50);
+      backdrop-filter:blur(6px);
+      z-index:40;
+      animation: fadeIn 0.25s ease-out;
+    }
     .modal.show{display:flex}
+
     .modal-card{
       width:420px;
       max-width:94%;
-      padding:18px;
-      border-radius:12px;
-      background:#fff;
-      color:#0b3b2c;
+      padding:32px 26px;
+      border-radius:22px;
+      background:linear-gradient(135deg,#2d0812 0%,#5a0e1f 45%,#7b1220 100%);
+      color:#fff;
       text-align:center;
-      box-shadow:0 18px 60px rgba(0,0,0,0.28);
+      box-shadow:0 22px 70px rgba(0,0,0,0.8);
+      border:3px solid #FFD700;
+      position:relative;
+      overflow:hidden;
+      animation: modalIn 0.45s cubic-bezier(0.68,-0.55,0.265,1.55);
     }
-    .modal-title{margin:0;font-size:18px}
-    .modal-sub{color:#0b3b2c;margin:8px 0 0}
-    .modal-bonus{font-size:22px;font-weight:800;margin:10px 0;color:#084a33}
+
+    .modal-card::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:radial-gradient(circle at 10% 0%,rgba(255,215,0,0.18),transparent 55%),
+                 radial-gradient(circle at 90% 100%,rgba(255,90,90,0.22),transparent 55%);
+      opacity:0.9;
+      pointer-events:none;
+    }
+    .modal-card > *{ position:relative; z-index:1; }
+
+    .modal-title{
+      margin:0;
+      font-size:24px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:#FFD700;
+      text-shadow:0 0 20px rgba(255,215,0,0.7);
+    }
+    .modal-sub{
+      color:rgba(255,255,255,0.92);
+      margin:12px 0 6px;
+      font-size:15px;
+      letter-spacing:0.5px;
+    }
+    .modal-bonus{
+      font-size:32px;
+      font-weight:800;
+      margin:14px 0 4px;
+      color:#FFD700;
+      text-shadow:0 0 24px rgba(255,215,0,1);
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0}
+      to{opacity:1}
+    }
+    @keyframes modalIn{
+      0%{transform:scale(0.7) translateY(30px); opacity:0;}
+      60%{transform:scale(1.03) translateY(0); opacity:1;}
+      100%{transform:scale(1); opacity:1;}
+    }
 
     /* confetti */
-    .confetti-layer{position:fixed;inset:0;pointer-events:none;z-index:95}
-    .confetti{position:absolute;width:8px;height:12px;border-radius:2px;animation:fall 1200ms forwards cubic-bezier(.2,.8,.25,1)}
-    @keyframes fall{0%{opacity:1;transform:translateY(-10px) rotate(0deg)}100%{opacity:1;transform:translateY(160vh) rotate(540deg)}}
+    .confetti-layer{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:95
+    }
+    .confetti{
+      position:absolute;
+      width:8px;
+      height:12px;
+      border-radius:2px;
+      animation:fall 1200ms forwards cubic-bezier(.2,.8,.25,1)
+    }
+    @keyframes fall{
+      0%{opacity:1;transform:translateY(-10px) rotate(0deg)}
+      100%{opacity:1;transform:translateY(160vh) rotate(540deg)}
+    }
 
     /* Responsive: mobile-first adjustments */
     @media (max-width:900px){
@@ -293,13 +446,13 @@
       .svg-wrapper{height:300px}
       .title{font-size:30px}
       .modal-card{width:360px}
-      .game-logo{ width:200px; }
+      .game-logo{ width:180px; margin-bottom:60px; }
     }
     @media (max-width:520px){
       :root{--bulb-size:56px}
 
-      body{ padding:10px; }
-      .stage{ padding:10px; }
+      body{ padding:24px 10px 16px; }
+      .stage{ padding:10px; margin-top:16px; }
 
       .svg-wrapper{
         height:260px;
@@ -310,14 +463,14 @@
 
       .title{font-size:22px}
       .subtitle{font-size:12px}
-      .game-logo{ width:200px; }
+      .game-logo{ width:170px; margin-bottom:40px; }
 
       .modal-card{
         width:calc(100% - 32px);
         margin:0 16px;
-        border-radius:10px;
-        padding:16px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+        border-radius:18px;
+        padding:24px 18px;
+        box-shadow: 0 16px 45px rgba(0,0,0,0.8);
       }
 
       .modal .btn{
@@ -327,9 +480,8 @@
       }
 
       .bulb::before{ width:4px; }
-      .modal-card .modal-bonus{ font-size:20px; }
+      .modal-card .modal-bonus{ font-size:26px; }
     }
-
 
     @media (max-width:400px){
       :root{--bulb-size:50px}
@@ -349,10 +501,8 @@
 
   <div class="stars" id="stars" aria-hidden="true"></div>
 
-
   <div id="preloader" aria-hidden="false">
     <div class="loader-content">
-
       <img src="assets/image.png" alt="Logo" class="loader-logo">
       <div class="loader-text">Cargando...</div>
       <div class="progress-bar-container">
@@ -361,14 +511,11 @@
     </div>
   </div>
 
-
   <div class="container" id="mainContainer">
-
     <div id="trees" class="trees-layer" aria-hidden="true"></div>
 
     <main class="stage" role="application" aria-label="Guirnalda interactiva">
       <header class="topbar" role="banner">
-
         <img src="assets/image.png" alt="Logo" class="game-logo">
         <h1 class="title">ARCOIRIS DE LUCES</h1>
         <p class="subtitle">CUAL SERÁ TU BONO DE LUZ?</p>
@@ -384,20 +531,18 @@
       </div>
     </main>
 
-
     <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
       <div class="modal-card" role="document">
         <h2 id="modal-title" class="modal-title">¡Felicidades!</h2>
         <p class="modal-sub">Te ganaste un bono de</p>
         <p id="modal-bonus" class="modal-bonus">--</p>
-        <div style="margin-top:12px">
+        <div style="margin-top:18px">
           <button id="modal-ok" class="btn">Aceptar</button>
         </div>
       </div>
     </div>
 
     <div id="confetti" class="confetti-layer" aria-hidden="true"></div>
-
 
     <audio id="tapSound" src="assets/tap.mp3" preload="auto"></audio>
     <audio id="popupSound" src="assets/popup.mp3" preload="auto"></audio>
@@ -450,7 +595,8 @@
 
     function initGuirnalda(){
       try {
-        const STORAGE_KEY = 'guirnalda.choice.v1';
+        // 🔑 LocalStorage propio para este juego
+        const STORAGE_KEY = 'arcoirisLucesArkana_v1';
 
         const BONUSES = [
           { label: "100% de bono", weight: 0.50 },
@@ -493,12 +639,21 @@
           bgStarted = true;
         }
 
+        // 🎵 La música arranca con la PRIMER interacción en pantalla
+        const handleUserInteract = () => {
+          startBgMusic();
+          document.removeEventListener('pointerdown', handleUserInteract);
+          document.removeEventListener('keydown', handleUserInteract);
+        };
+        document.addEventListener('pointerdown', handleUserInteract);
+        document.addEventListener('keydown', handleUserInteract);
+
         if(!svg || !path || !lights) {
           console.error('Elemento necesario no encontrado en el DOM.');
           return;
         }
 
-
+        // limpiar restos viejos si los hubiera
         (svg.querySelectorAll('g.bulb-svg, foreignObject, line.hanger') || []).forEach(n => n.remove());
 
         const todayStr = () => {
@@ -512,9 +667,9 @@
             return JSON.parse(raw);
           } catch(e){ return null; }
         }
-        function setStoredChoice(bonus){
+        function setStoredChoice(bonus, index){
           try {
-            const item = { bonus, date: todayStr(), ts: Date.now() };
+            const item = { bonus, index, date: todayStr(), ts: Date.now() };
             localStorage.setItem(STORAGE_KEY, JSON.stringify(item));
           } catch(e){}
         }
@@ -522,6 +677,7 @@
           const st = getStoredChoice();
           return st && st.date === todayStr();
         }
+
         function hexToRgba(hex, a=0.28){
           const c = hex.replace('#','');
           const r = parseInt(c.substring(0,2),16);
@@ -549,7 +705,24 @@
           return cumulative[cumulative.length - 1].label;
         }
 
-     
+        function assignBonuses(){
+          const bulbs = document.querySelectorAll('.bulb');
+          bulbs.forEach((b, i) => {
+            const pick = weightedPick(BONUSES);
+            const color = RAINBOW[i % RAINBOW.length];
+            b.dataset.bonus = pick;
+            b.dataset.index = String(i);
+
+            const glow = b.querySelector('.glow');
+            if(glow) glow.style.background = hexToRgba(color, 0.36);
+
+            const art = b.querySelector('.art');
+            if(art) art.innerHTML = bulbSVG(color);
+
+            b.classList.remove('revealed');
+          });
+        }
+
         function createBulbs(n){
           lights.innerHTML = '';
           for(let i=0;i<n;i++){
@@ -559,8 +732,13 @@
             btn.setAttribute('role','listitem');
             btn.tabIndex = 0;
 
-            const glow = document.createElement('div'); glow.className = 'glow'; btn.appendChild(glow);
-            const art = document.createElement('div'); art.className = 'art'; art.innerHTML = bulbSVG(RAINBOW[i % RAINBOW.length]); btn.appendChild(art);
+            const glow = document.createElement('div');
+            glow.className = 'glow';
+            btn.appendChild(glow);
+
+            const art = document.createElement('div');
+            art.className = 'art';
+            btn.appendChild(art);
 
             btn.addEventListener('click', onBulbClick);
             btn.addEventListener('keydown', (e) => {
@@ -575,29 +753,10 @@
           assignBonuses();
           positionBulbsDeferred();
 
-
           window.removeEventListener('resize', positionBulbsDeferred);
           window.addEventListener('resize', positionBulbsDeferred);
           window.removeEventListener('orientationchange', positionBulbsDeferred);
           window.addEventListener('orientationchange', positionBulbsDeferred);
-        }
-
-        function assignBonuses(){
-          const bulbs = document.querySelectorAll('.bulb');
-          bulbs.forEach((b, i) => {
-            const pick = weightedPick(BONUSES);
-            const color = RAINBOW[i % RAINBOW.length];
-            b.dataset.bonus = pick;
-
-            const glow = b.querySelector('.glow');
-            if(glow) glow.style.background = hexToRgba(color, 0.36);
-
-            const art = b.querySelector('.art');
-            if(art) art.innerHTML = bulbSVG(color);
-
-            b.classList.remove('revealed');
-            b.disabled = false;
-          });
         }
 
         function positionBulbs(){
@@ -615,7 +774,7 @@
 
           const cssBulb = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bulb-size')) || 96;
           const isMobile = (window.innerWidth || document.documentElement.clientWidth) < 520;
-          const offsetPx = Math.max(cssBulb * (isMobile ? 0.16 : 0.22), isMobile ? 12 : 20);
+          const offsetPx = Math.max(cssBulb * (isMobile ? 0.16 : 0.20), isMobile ? 10 : 18);
 
           nodes.forEach((el, idx) => {
             const start = (window.innerWidth < 520) ? 0.03 : 0.06;
@@ -683,53 +842,53 @@
           window.requestAnimationFrame(()=>{ setTimeout(()=> positionBulbs(), 60); });
         }
 
-
-        function onBulbClick(e){
-          const btn = e.currentTarget;
-          if(!btn) return;
-
-      
-          startBgMusic();
-
-
-          playSfx(tapSound, 0.85);
-
-          if(hasChosenToday()){
-            const stored = getStoredChoice();
-            if(stored) showStoredModal(stored.bonus);
-            return;
-          }
-          if(btn.classList.contains('revealed')) return;
-
-          btn.classList.add('revealed');
-          btn.disabled = true;
-          document.querySelectorAll('.bulb').forEach(b => { if(b !== btn) b.disabled = true; });
-
-          const bonus = btn.dataset.bonus || '¡Sorpresa!';
-          setStoredChoice(bonus);
-          showModalWith(bonus);
-          createConfettiAtElement(btn);
-        }
-
         function showModalWith(bonus){
+          const title = modal.querySelector('.modal-title');
+          const sub = modal.querySelector('.modal-sub');
+          if(title) title.textContent = '¡Felicidades!';
+          if(sub) sub.textContent = 'Te ganaste un bono de';
           modalBonus.textContent = bonus;
           modal.classList.add('show');
           modal.setAttribute('aria-hidden','false');
-
           playSfx(popupSound, 0.9);
         }
 
         function showStoredModal(bonus){
           const title = modal.querySelector('.modal-title');
           const sub = modal.querySelector('.modal-sub');
-          if(title) title.textContent='Ya elegiste hoy';
-          if(sub) sub.textContent='No puedes elegir otra hasta mañana. Tu bono fue:';
+          if(title) title.textContent='Tu bono de hoy';
+          if(sub) sub.textContent='Hoy ya jugaste. Este fue tu bono:';
           modalBonus.textContent = bonus;
           modal.classList.add('show');
           modal.setAttribute('aria-hidden','false');
-
-
           playSfx(popupSound, 0.7);
+        }
+
+        function onBulbClick(e){
+          const btn = e.currentTarget;
+          if(!btn) return;
+
+          // arranca la música si aún no empezó
+          startBgMusic();
+          playSfx(tapSound, 0.85);
+
+          const stored = getStoredChoice();
+          if(stored && stored.date === todayStr()){
+            // 🔁 Ya jugó hoy: solo mostramos el bono guardado
+            showStoredModal(stored.bonus);
+            return;
+          }
+
+          // Primera vez del día
+          btn.classList.add('revealed');
+
+          const bonus = btn.dataset.bonus || weightedPick(BONUSES);
+          const bulbs = Array.from(document.querySelectorAll('.bulb'));
+          const index = bulbs.indexOf(btn);
+          setStoredChoice(bonus, index);
+
+          showModalWith(bonus);
+          createConfettiAtElement(btn);
         }
 
         function createConfettiAtElement(el){
@@ -738,7 +897,7 @@
           const cy = rect.top + rect.height/2;
           const colors = ['#ff3b30','#ff9500','#ffcc00','#34c759','#5ac8fa','#5856d6','#ff2d55'];
           const isMobile = (window.innerWidth || document.documentElement.clientWidth) < 520;
-          const count = isMobile ? 10 : 28;
+          const count = isMobile ? 12 : 30;
 
           for(let i=0;i<count;i++){
             const p = document.createElement('div');
@@ -754,7 +913,6 @@
             setTimeout(()=> p.remove(), 1100 + Math.random()*600);
           }
         }
-
 
         function createTrees(count = 40){
           if(!treesLayer || !stageEl) return;
@@ -835,7 +993,6 @@
           }, 240);
         });
 
-        // modal handler
         modalOk.addEventListener('click', () => {
           modal.classList.remove('show');
           modal.setAttribute('aria-hidden','true');
@@ -847,7 +1004,6 @@
 
         // init
         createBulbs(BULB_COUNT);
-        assignBonuses();
 
         if (document.fonts && document.fonts.ready) {
           document.fonts.ready
@@ -858,13 +1014,16 @@
           refreshTrees();
         }
 
+        // si ya eligió hoy, mostramos directamente su bono
         const stored = getStoredChoice();
         if(stored && stored.date === todayStr()){
-          document.querySelectorAll('button.bulb').forEach(b => b.disabled = true);
+          const bulbs = document.querySelectorAll('.bulb');
+          if(typeof stored.index === 'number' && bulbs[stored.index]){
+            bulbs[stored.index].classList.add('revealed');
+          }
           showStoredModal(stored.bonus);
         }
 
-        console.log('Guirnalda inicializada (con preloader + estrellas + audio).');
       } catch (err) {
         console.error('Error inicializando guirnalda:', err);
       }
