@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ARCOIRIS DE LUCES</title>
 
-  <!-- Tipografía Garamond (EB Garamond desde Google Fonts) -->
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
@@ -15,15 +14,12 @@
       --bulb-size:96px;
       --font: "EB Garamond", "Garamond", serif;
     }
-
-    /* Reset / base */
+    
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:var(--font);background:linear-gradient(180deg,#6c0f14 0%, #7b1220 45%, #3a0710 100%);color:#fff}
     body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;overflow-x:hidden}
 
-    /* =========================
-       ⭐ ESTRELLAS (LOOP VISUAL)
-       ========================= */
+
     .stars{
       position:fixed;
       inset:0;
@@ -42,9 +38,6 @@
       50%{opacity:1; transform:scale(1.2)}
     }
 
-    /* =========================
-       ⏳ PRELOADER
-       ========================= */
     #preloader{
       position:fixed;
       inset:0;
@@ -96,7 +89,7 @@
       100%{background-position:100% 0}
     }
 
-    /* Wrapper del juego (aparece luego del loader) */
+
     .container{
       opacity:0;
       transition:opacity .5s ease;
@@ -106,7 +99,7 @@
     }
     .container.visible{ opacity:1; }
 
-    /* Capa de árboles (fondo decorativo) */
+
     .trees-layer{
       position:fixed;
       inset:0;
@@ -133,13 +126,12 @@
       100%{ transform: translateY(0) rotate(var(--rot)); }
     }
 
-    /* Stage centra todo */
+
     .stage{width:100%;max-width:1100px;position:relative;padding:16px;display:flex;flex-direction:column;align-items:center;gap:14px;z-index:3}
 
-    /* Header / título */
     .topbar{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:6px}
 
-    /* ✅ Imagen/logo en escena */
+
     .game-logo{
       width:200px;
       height:auto;
@@ -171,7 +163,7 @@
       text-align:center;
     }
 
-    /* SVG + overlay */
+
     .svg-wrapper{
       position:relative;
       width:100%;
@@ -188,7 +180,7 @@
     svg.garland{position:relative; width:92%; height:100%; pointer-events:none; z-index:1}
     .lights{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:auto;z-index:2}
 
-    /* Bulb */
+
     .bulb{
       position:absolute;
       width:var(--bulb-size);
@@ -203,7 +195,6 @@
     }
     .bulb:focus{box-shadow:0 0 0 10px rgba(255,255,255,0.06);border-radius:50%}
 
-    /* cable corto */
     .bulb::before{
       content:"";
       position:absolute;
@@ -212,7 +203,6 @@
       width:5px;height:calc(var(--bulb-size) * 0.48);background:var(--string-color);border-radius:2px;z-index:6;
     }
 
-    /* glow/art */
     .bulb .glow{
       position:absolute;width:140%;height:140%;border-radius:50%;filter:blur(14px);z-index:1;transform:translateY(6px);
       transition:opacity .18s ease, transform .18s ease;
@@ -224,14 +214,14 @@
     .bulb.revealed{opacity:1;pointer-events:none;transform:scale(1.06)}
     .bulb.revealed .glow{opacity:0.6}
 
-    /* Botones generales */
+
     .btn{
       background:#0b6b4a;color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:700;
       font-family:var(--font);
       font-size:15px;
     }
 
-    /* Botón Aceptar del modal — ahora rojo y táctil */
+
     .modal .btn{
       display:inline-flex;
       align-items:center;
@@ -340,7 +330,7 @@
       .modal-card .modal-bonus{ font-size:20px; }
     }
 
-    /* Very small screens: reduce trees/animation and touch improvements */
+
     @media (max-width:400px){
       :root{--bulb-size:50px}
       .svg-wrapper{height:220px}
@@ -356,13 +346,13 @@
 </head>
 
 <body>
-  <!-- ⭐ Fondo estrellas (loop visual) -->
+
   <div class="stars" id="stars" aria-hidden="true"></div>
 
-  <!-- ⏳ Preloader -->
+
   <div id="preloader" aria-hidden="false">
     <div class="loader-content">
-      <!-- ✅ poné tu logo acá -->
+
       <img src="assets/image.png" alt="Logo" class="loader-logo">
       <div class="loader-text">Cargando...</div>
       <div class="progress-bar-container">
@@ -371,15 +361,14 @@
     </div>
   </div>
 
-  <!-- ✅ wrapper para mostrar luego del preloader -->
+
   <div class="container" id="mainContainer">
 
-    <!-- capa decorativa con árboles (fondo) -->
     <div id="trees" class="trees-layer" aria-hidden="true"></div>
 
     <main class="stage" role="application" aria-label="Guirnalda interactiva">
       <header class="topbar" role="banner">
-        <!-- ✅ Imagen en escena -->
+
         <img src="assets/image.png" alt="Logo" class="game-logo">
         <h1 class="title">ARCOIRIS DE LUCES</h1>
         <p class="subtitle">CUAL SERÁ TU BONO DE LUZ?</p>
@@ -395,7 +384,7 @@
       </div>
     </main>
 
-    <!-- modal -->
+
     <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
       <div class="modal-card" role="document">
         <h2 id="modal-title" class="modal-title">¡Felicidades!</h2>
@@ -409,8 +398,7 @@
 
     <div id="confetti" class="confetti-layer" aria-hidden="true"></div>
 
-    <!-- 🔊 Sonidos -->
-    <!-- ✅ Cambiá los nombres de archivo si querés -->
+
     <audio id="tapSound" src="assets/tap.mp3" preload="auto"></audio>
     <audio id="popupSound" src="assets/popup.mp3" preload="auto"></audio>
     <audio id="bgMusic" src="assets/background-music.mp3" preload="auto" loop></audio>
@@ -436,7 +424,6 @@
       }
     })();
 
-    // ⏳ Preloader + init juego
     document.addEventListener('DOMContentLoaded', () => {
       const preloader = document.getElementById('preloader');
       const mainContainer = document.getElementById('mainContainer');
@@ -511,10 +498,9 @@
           return;
         }
 
-        // Cleanup possible leftover SVG groups/lines from previous scripts
+
         (svg.querySelectorAll('g.bulb-svg, foreignObject, line.hanger') || []).forEach(n => n.remove());
 
-        // ---------- helpers ----------
         const todayStr = () => {
           const d = new Date();
           return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -563,7 +549,7 @@
           return cumulative[cumulative.length - 1].label;
         }
 
-        // ---------- create / assign bulbs (HTML overlay) ----------
+     
         function createBulbs(n){
           lights.innerHTML = '';
           for(let i=0;i<n;i++){
@@ -589,7 +575,7 @@
           assignBonuses();
           positionBulbsDeferred();
 
-          // ensure resize recalculation
+
           window.removeEventListener('resize', positionBulbsDeferred);
           window.addEventListener('resize', positionBulbsDeferred);
           window.removeEventListener('orientationchange', positionBulbsDeferred);
@@ -614,7 +600,6 @@
           });
         }
 
-        // ---------- position bulbs robustly (SVG -> screen) ----------
         function positionBulbs(){
           const nodes = Array.from(document.querySelectorAll('.bulb'));
           if(!path || !svg || nodes.length === 0) return;
@@ -698,15 +683,15 @@
           window.requestAnimationFrame(()=>{ setTimeout(()=> positionBulbs(), 60); });
         }
 
-        // ---------- click handler ----------
+
         function onBulbClick(e){
           const btn = e.currentTarget;
           if(!btn) return;
 
-          // ✅ Música en loop arranca con el primer click real (autoplay safe)
+      
           startBgMusic();
 
-          // ✅ SFX al tocar bombilla
+
           playSfx(tapSound, 0.85);
 
           if(hasChosenToday()){
@@ -731,7 +716,6 @@
           modal.classList.add('show');
           modal.setAttribute('aria-hidden','false');
 
-          // ✅ SFX popup premio
           playSfx(popupSound, 0.9);
         }
 
@@ -744,11 +728,10 @@
           modal.classList.add('show');
           modal.setAttribute('aria-hidden','false');
 
-          // ✅ SFX popup “ya jugaste”
+
           playSfx(popupSound, 0.7);
         }
 
-        // ---------- confetti ----------
         function createConfettiAtElement(el){
           const rect = el.getBoundingClientRect();
           const cx = rect.left + rect.width/2;
@@ -772,7 +755,7 @@
           }
         }
 
-        // ---------- trees ----------
+
         function createTrees(count = 40){
           if(!treesLayer || !stageEl) return;
           treesLayer.innerHTML = '';
